@@ -3,25 +3,26 @@ import { initializeApp } from 'firebase/app'
 
 import './App.css';
 
-const firebaseapp = initializeApp( firebaseConfig)
+const firebaseapp = initializeApp(firebaseConfig)
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-secondary">Secondary</button>
+      <button type="button" class="btn btn-success">Success</button>
+      <button type="button" class="btn btn-danger">Danger</button>
+      <button type="button" class="btn btn-warning">Warning</button>
+      <button type="button" class="btn btn-info">Info</button>
+      <button type="button" class="btn btn-light">Light</button>
+      <button type="button" class="btn btn-dark">Dark</button>
 
-        <p>
-          Hello React 
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button type="button" class="btn btn-link">Link</button>
+      <div />
+      );
+}
+
+      export default TypesExample;
     </div>
   );
 }
