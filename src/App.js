@@ -2,7 +2,8 @@ import { firebaseConfig } from './config/Config';
 import { initializeApp } from 'firebase/app'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 // import firestore 
-import { getFirestore} from "firebase/firestore"
+import { getFirestore } from 'firebase/firestore';
+import { getFirestore} from "firebase/firestorage"
 import { useState } from 'react'; 
 
 import './App.css';
@@ -20,10 +21,12 @@ import { Routes, Route } from 'react-router-dom';
 import { NavContext } from './context/NavContext'; 
 import { FBAuthContext } from './context/FBAAuthContext';
 import { FBDbContext } from '/contexts/FBDbContext'; 
+import { FBStorageContext } from './contexts/FBStorageContext'; 
 
 const Firebaseapp = initializeApp(firebaseConfig)
 const FirebaseAuth = getAuth( FirebaseApp )
 const FirebaseDB = getFirestore(Firebaseapp)
+const FirebaseStorage = getStorage(FirebaseApp) 
 
 const NavRoutes = [
  { name: "Home", goto: "/" }, 
@@ -62,6 +65,7 @@ function App() {
       </NavContext.Provider>
       <FBAuthContext.Provider value={FirebaseAuth}>
         <FBDbContext.Provider value={FirebaseDB}>
+        <FBStorageContext value={FirebaseStorage}>
       <Routes>
         <Route path="/" element={ <Home/> }  />  
         <Route path="/" element={ <Home/> }  />  
@@ -71,6 +75,7 @@ function App() {
         <Route path="/signin" element={ <Signin/> } />
         <Route path="/signout" element={ <SignOut/> } />
       </Routes>
+      </FBStorageContext.Provider>
       </FBDbContext.Provider>
     </FBAuthContext.Provider>
     </div>
