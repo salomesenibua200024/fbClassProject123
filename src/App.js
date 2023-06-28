@@ -19,6 +19,7 @@ import { Routes, Route } from 'react-router-dom';
 // contexts 
 import { NavContext } from './context/NavContext'; 
 import { FBAuthContext } from './context/FBAAuthContext';
+import { FBDbContext } from '/contexts/FBDbContext'; 
 
 const Firebaseapp = initializeApp(firebaseConfig)
 const FirebaseAuth = getAuth( FirebaseApp )
