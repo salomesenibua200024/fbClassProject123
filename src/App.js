@@ -61,6 +61,7 @@ function App() {
         <Header/>
       </NavContext.Provider>
       <FBAuthContext.Provider value={FirebaseAuth}>
+        <FBDbContext.Provider value={FirebaseDB}>
       <Routes>
         <Route path="/" element={ <Home/> }  />  
         <Route path="/" element={ <Home/> }  />  
@@ -70,6 +71,7 @@ function App() {
         <Route path="/signin" element={ <Signin/> } />
         <Route path="/signout" element={ <SignOut/> } />
       </Routes>
+      </FBDbContext.Provider>
     </FBAuthContext.Provider>
     </div>
   );
