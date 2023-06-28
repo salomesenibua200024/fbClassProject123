@@ -50,7 +50,10 @@ export function Signup ( props ) {
      <Container fluid className="mt-4">
         <Row>
             <Col className="two" md={{span: 4, offset: 4 }}>
-                <Form onSubmit={ () => SignUpHandler() }>
+                <Form onSubmit={ (evt) => {
+                    evt.preventDefault()
+                    SignUpHandler()
+                    } }>
                     <h3>Sign up for an account</h3>
                     <Form.Group>
                         <Form.Label>Email address</Form.Label>
@@ -66,13 +69,15 @@ export function Signup ( props ) {
                         placeholder="minimum 8 characters"
                         onChange={ (evt) => setPassword(evt.target.value) } />
                     </Form.Group> 
-                    <Button variant="primary" 
-                    type="submit"
+                    <Button
+                     variant="primary" 
+                     type="submit"
                      className="my-2 w-100"
-                      size="lg" 
-                      disabled = { ( validEmail && validPassword) ? false: true } 
-                      >
-                        Sign up</Button>
+                     size="lg" 
+                     disabled = { ( validEmail && validPassword) ? false : true } 
+                    >
+                        Sign up
+                    </Button>
                  </Form>
             </Col>
         </Row>
