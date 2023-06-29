@@ -5,10 +5,12 @@ import Card from 'react-bootstrap/Card';
 
 import { useContext, useEffect, useState } from 'react';
 import { collection } from 'firebase/firestore';
-import { ref } from "firebase/storage"; 
+import { ref, getDownloadURL } from "firebase/storage"; 
 
 import { FBDbContext } from '../context/FBDbContext';
 import { FBStorageContext } from '../context/FBStorageContext';
+
+import '../styles/Home.css' 
 
 export function Home () {
     const[ data, setData ] = useState()
@@ -33,18 +35,29 @@ export function Home () {
     }
 
     useEffect( () => {
-        if( !data ) {
+        if( data.length === 0 ) {
             getData()
         }
     })
 
+    const Image = ( props ) => {
+        const [imgPath, setImgPath] = useState()
+        const imgRef = ref( FBStorage, book_cover/${ props.path } )
+        getDownloadURL( imgRef ).then( (url) => console.log(url) )
+        return(
+            <Card.Img variant="top" src={imgPath} className="card-image"/> 
+        )
+    }
+
     const Columns = data.map( (book, key) => {
         return(
             <Col md="4" key={key}>
-                <Card>
+                <Card className="book-card">
+                    <Image path={book.image} /> 
                     <Card.Body>
-                      <Card.Title>{book.title}</Card.Title>  
+                      <Card.Title>{book.title}</Card.Title> 
                     </Card.Body>
+                    <a href={"/detail/"} className="card-link"></a>
                </Card>
             </Col>
         )
