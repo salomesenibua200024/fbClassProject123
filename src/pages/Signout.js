@@ -1,31 +1,28 @@
-import { FBAuthContext } from "../context/FBAAuthContext"
+import { FBAuthContext } from "../context/FBAuthContext"
 import { signOut } from "firebase/auth"
 import { useContext, useEffect } from "react"
-import { useNavigatep } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export function SignOut ( props ) {
     const FBAuth = useContext( FBAuthContext )
-    const SignOutHandler = () {
-    const navigation = useNavigate()
+    const navigate = useNavigate()
 
     const SignOutHandler = () => {
         signOut(FBAuth)
         .then( () => {
-            // do sign out procedure 
-            Navigate("/")
+            // do sign out procedure
+            navigate("/")
         })
         .catch( (error) => {
-            console.log( error.code, error.message ) 
-
-        })
+            console.log( error.code, error.message )
+        } )
     }
 
-    useEffect( () => SignOutHandler)
+    useEffect( () => SignOutHandler() )
+
     return (
         <div>
-            <h1>Sign Out</h1>
+            <h1>Sign out</h1>
         </div>
     )
 }
-
-

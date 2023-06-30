@@ -4,16 +4,16 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
 import { useContext, useEffect, useState } from 'react';
-import { collection } from 'firebase/firestore';
-import { ref, getDownloadURL } from "firebase/storage"; 
+import { collection, getDocs } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
 
 import { FBDbContext } from '../context/FBDbContext';
 import { FBStorageContext } from '../context/FBStorageContext';
 
-import '../styles/Home.css' 
+import '../styles/Home.css'
 
 export function Home () {
-    const[ data, setData ] = useState()
+    const[ data, setData ] = useState([])
 
     const FBDb = useContext(FBDbContext)
     const FBStorage = useContext( FBStorageContext )
@@ -23,15 +23,14 @@ export function Home () {
         const querySnapshot = await getDocs( collection(FBDb, "books") )
         // an array to store all the books from firestore
         let books = []
-        querySnapshot,forEach((doc) => {
+        querySnapshot.forEach( (doc) => {
             let book = doc.data()
-            book.id = doc.idk
+            book.id = doc.id
             // add the book to the array
             books.push(book)
-        } )
+        })
         // set the books array as the data state
         setData(books)
-        // console.log(books)
     }
 
     useEffect( () => {
@@ -41,32 +40,34 @@ export function Home () {
     })
 
     const Image = ( props ) => {
-        const [imgPath, setImgPath] = useState()
-        const imgRef = ref( FBStorage, book_cover/${ props.path } )
-        getDownloadURL( imgRef ).then( (url) => console.log(url) )
+        const [imgPath,setImgPath] = useState()
+        const imgRef = ref( FBStorage, `book_cover/${ props.path }`)
+        getDownloadURL( imgRef ).then( (url) => setImgPath(url) )
+
         return(
-            <Card.Img variant="top" src={imgPath} className="card-image"/> 
+            <Card.Img variant="top" src={imgPath} className="card-image" />
         )
     }
 
     const Columns = data.map( (book, key) => {
         return(
-            <Col md="4" key={key}>
+            <Col md="3" key={key} className="my-3">
                 <Card className="book-card">
-                    <Image path={book.image} /> 
+                    <Image path={book.image} />
                     <Card.Body>
-                      <Card.Title>{book.title}</Card.Title> 
+                        <Card.Title>{book.title}</Card.Title>
                     </Card.Body>
-                    <a href={"/detail/"} className="card-link"></a>
-               </Card>
+                    <a href={"/detail/"+book.id} className="card-link"></a>
+                </Card>
             </Col>
         )
     })
-   return (
-        <Container>
+
+    return (
+       <Container>
             <Row>
                 {Columns}
             </Row>
-        </Container> 
-         ) 
-   } 
+       </Container>
+    )
+}
